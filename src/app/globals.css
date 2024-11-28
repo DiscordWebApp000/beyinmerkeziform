@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes borderPulse {
+  0% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #10b981; /* Green color */
+  }
+  100% {
+    border-color: transparent;
+  }
+}
+
+input:focus, input:checked {
+  animation: borderPulse 1s ease-in-out infinite;
+}
