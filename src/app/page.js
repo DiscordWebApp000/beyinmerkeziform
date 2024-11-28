@@ -45,18 +45,17 @@ export default function FormPage() {
     e.preventDefault();
     try {
       await addDoc(collection(db, 'forms'), formData);
-      alert('Veri başarıyla kaydedildi!');
+      alert('Məlumat uğurla qeyd edildi!');
     } catch (error) {
-      alert('Veri kaydederken bir hata oluştu');
+      alert('Məlumatı qeyd ederken xəta baş verdi');
       console.error(error);
     }
     
-
     setTimeout(() => {
       window.location.reload()
     }, 3000);
-    
   };
+  
 
   const resetPage = () => {
     setFormData(initialFormData);
