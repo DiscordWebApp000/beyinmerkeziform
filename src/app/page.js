@@ -1,22 +1,13 @@
 'use client';
 import { useState } from 'react';
 import { db, addDoc, collection } from '../../lib/firebase';
+import TextInput from './components/TextInput';
+import RadioButtonGroup from './components/RadioButtonGroup';
+import RadioGroupWithOther from './components/RadioGroupWithOther';
 import Image from 'next/image';
 
 export default function FormPage() {
-  const [selectedUniversity, setSelectedUniversity] = useState(""); // Seçilen üniversite
-  const [otherUniversity, setOtherUniversity] = useState(""); // Diğer üniversite input değeri
-
-  const handleUniversityChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "university") {
-      setSelectedUniversity(value);
-    }
-    if (name === "otherUniversity") {
-      setOtherUniversity(value);
-    }
-  };
-
+  // Formun başlangıç değerlerini tanımlıyoruz
   const initialFormData = {
     firstName: '',
     lastName: '',
@@ -31,8 +22,10 @@ export default function FormPage() {
     finCode: '',
   };
 
+  // Form verilerini yönetmek için state kullanıyoruz
   const [formData, setFormData] = useState(initialFormData);
 
+  // Formda değişiklik olduğunda çalışacak fonksiyon
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -41,25 +34,49 @@ export default function FormPage() {
     });
   };
 
+  // Formun gönderilmesi sırasında yapılacak işlemler
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'forms'), formData);
+      await addDoc(collection(db, 'forms'), formData); // Firebase'e veri ekleme
       alert('Məlumat uğurla qeyd edildi!');
     } catch (error) {
-      alert('Məlumatı qeyd ederken xəta baş verdi');
+      alert('Məlumatı qeyd edərkən xəta baş verdi');
       console.error(error);
     }
-    
-    setTimeout(() => {
-      window.location.reload()
-    }, 3000);
-  };
-  
 
+  
+  };
+
+  // Formu sıfırlamak için kullanılan fonksiyon
   const resetPage = () => {
-    setFormData(initialFormData);
-    window.location.reload(); // Sayfayı yeniden yükler
+  
+    window.location.reload(); // Sayfayı yeniden yükle
+  };
+
+  // Form seçenekleri
+  const specialtyOptions = [
+    'Energetika/Elektrik və Elektronika mühəndisliyi',
+    'İnformasiya texnologiyaları',
+    'Robototexnika/mexanika mühəndisliyi',
+    'Proseslərin avtomatlaşdırılması mühəndisliyi',
+    'İqtisadiyyat',
+  ];
+
+  const degreeOptions = ['Bakalavr', 'Magistratura'];
+
+  const militaryServiceOptions = ['Bəli', 'Xeyr'];
+
+  const universityOptions = [
+    'Azərbaycan Dövlət Neft və Sənaye Universiteti',
+    'Sumqayıt Dövlət Universiteti',
+    'Azərbaycan Texniki Universiteti',
+    'Bakı Mühəndislik Universiteti',
+  ];
+
+  // Formun tamamlanıp tamamlanmadığını kontrol eden fonksiyon
+  const isFormComplete = () => {
+    return Object.values(formData).every((value) => value.trim() !== ''); // Tüm değerler dolu mu?
   };
 
   return (
@@ -109,301 +126,135 @@ export default function FormPage() {
         
 
         {/* Ad */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Ad</h3>
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            placeholder="Your Answer"
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border-b-2 border-gray-300 focus:outline-none focus:border-green-500 text-gray-800 text-sm"
-          />
-        </div>
+        <TextInput 
+          label="Ad" 
+          type={"text"}
+          name="firstName" 
+          value={formData.firstName} 
+          placeholder="Your Answer" 
+          onChange={handleChange} />
+
 
         {/* Soyad */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Soyad</h3>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            placeholder="Your Answer"
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border-b-2 border-gray-300 focus:outline-none focus:border-green-500 text-gray-800 text-sm"
-          />
-        </div>
+        <TextInput 
+          label="Soyad" 
+          type={"text"}
+          name="lastName" 
+          value={formData.lastName} 
+          placeholder="Your Answer" 
+          onChange={handleChange} />
 
         {/* Ata Adı */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Ata Adı</h3>
-          <input
-            type="text"
-            name="fatherName"
-            value={formData.fatherName}
-            placeholder="Your Answer"
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border-b-2 border-gray-300 focus:outline-none focus:border-green-500 text-gray-800 text-sm"
-          />
-        </div>
+        <TextInput 
+          label="Ata Adı" 
+          type={"text"}
+          name="fatherName" 
+          value={formData.fatherName} 
+          placeholder="Your Answer" 
+          onChange={handleChange} />
+        
 
         {/* E-posta Ünvanı */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Elektron poçt ünvanı
-          </h3>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            placeholder="Your Answer"
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border-b-2 border-gray-300 focus:outline-none focus:border-green-500 text-gray-800 text-sm"
-            required
-          />
-        </div>
+        <TextInput 
+          label="Elektron poçt ünvanı" 
+          type={"email"}
+          name="email" 
+          value={formData.email} 
+          placeholder="Your Answer" 
+          onChange={handleChange} />
 
         {/* Telefon Numarası */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Əlaqə Nömrəsi</h3>
-          <input
-            type="number"
-            name="phone"
-            value={formData.phone}
-            placeholder="Your Answer"
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border-b-2 border-gray-300 focus:outline-none focus:border-green-500 text-gray-800 text-sm"
-            required
-          />
-        </div>
+        <TextInput 
+          label="Əlaqə Nömrəsi" 
+          type={"number"}
+          name="phone" 
+          value={formData.phone} 
+          placeholder="Your Answer" 
+          onChange={handleChange} />
 
         {/* Askerlik Durumu */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Hərbi xidmətdə olmusunuzmu?
-          </h3>
-          <div className="flex flex-col gap-3">
-            <label className="inline-flex items-center text-gray-700">
-              <input
-                type="radio"
-                name="militaryService"
-                value="Bəli"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Bəli
-            </label>
-            <label className="inline-flex items-center text-gray-700">
-              <input
-                type="radio"
-                name="militaryService"
-                value="Xeyr"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Xeyr
-            </label>
-          </div>
-        </div>
+        
+        <RadioButtonGroup
+        label="Hərbi xidmətdə olmusunuzmu?"
+        name="militaryService"
+        options={militaryServiceOptions}
+        selectedValue={formData.militaryService}
+        onChange={handleChange}
+      />
 
         {/* Üniversite Seçimi */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Təhsil aldığınız universitet</h3>
-          <div className="flex flex-col gap-2 text-gray-700">
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="university"
-                value="Azərbaycan Dövlət Neft və Sənaye Universiteti"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Azərbaycan Dövlət Neft və Sənaye Universiteti
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="university"
-                value="Sumqayıt Dövlət Universiteti"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Sumqayıt Dövlət Universiteti
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="university"
-                value="Azərbaycan Texniki Universiteti"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Azərbaycan Texniki Universiteti
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="university"
-                value="Bakı Mühəndislik Universiteti"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Bakı Mühəndislik Universiteti
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="university"
-                value="Diğer"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Diğer
-            </label>
-            {selectedUniversity === "Diğer" && (
-              <input
-                type="text"
-                name="otherUniversity"
-                value={otherUniversity}
-                onChange={handleUniversityChange}
-                placeholder="Lütfen üniversitenizi yazın"
-                className="mt-1 p-2 w-full border-b-2 border-gray-300 focus:outline-none focus:border-green-500 text-gray-800 text-sm"
-              />
-            )}
-          </div>
-        </div>
+        <RadioGroupWithOther
+        label="Təhsil aldığınız universitet"
+        name="university"
+        options={universityOptions}
+        selectedValue={formData.university}
+        onChange={handleChange}
+        placeholder="Lütfen üniversitenizi yazın"
+      />
+    
 
         {/* İxtisas Seçimi */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">İxtisas</h3>
-          <div className="flex flex-col gap-2 text-gray-700">
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="specialty"
-                value="Energetika/Elektrik və Elektronika mühəndisliyi"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Energetika/Elektrik və Elektronika mühəndisliyi
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="specialty"
-                value="İnformasiya texnologiyaları"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              İnformasiya texnologiyaları
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="specialty"
-                value="Robototexnika/mexanika mühəndisliyi"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Robototexnika/mexanika mühəndisliyi
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="specialty"
-                value="Proseslərin avtomatlaşdırılması mühəndisliyi"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Proseslərin avtomatlaşdırılması mühəndisliyi
+        <RadioButtonGroup
+        label="İxtisas"
+        name="specialty"
+        options={specialtyOptions}
+        selectedValue={formData.specialty}
+        onChange={handleChange}
+      />
 
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="specialty"
-                value="İqtisadiyyat"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              İqtisadiyyat
-            </label>
-          </div>
-        </div>
+    {/* Ali Təhsil Dərəcəsi Seçimi */}
+        <RadioButtonGroup
+        label="Ali təhsil dərəcəsi"
+        name="degree"
+        options={degreeOptions}
+        selectedValue={formData.degree}
+        onChange={handleChange}
+      />
 
-       {/* Ali Təhsil Dərəcəsi Seçimi */}
-       <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Ali təhsil dərəcəsi</h3>
-          <div className="flex flex-col gap-2 text-gray-700">
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="degree"
-                value="Bakalavr"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Bakalavr
-            </label>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name="degree"
-                value="Magistr"
-                onChange={handleChange}
-                className="mr-2"
-              />
-              Magistr
-            </label>
-            
-          </div>
-        </div>
+       
+      
 
         {/* Ortalama not */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">ÜOMG - Ortalama bal
-          </h3>
-          <input
-            type="number"
-            name="averageScore"
-            value={formData.averageScore}
-            onChange={handleChange}
-            placeholder="Your Answer"
-            className="mt-1 p-2 w-full border-b-2 border-gray-300 focus:outline-none focus:border-green-500 text-gray-800 text-sm"
-          />
-        </div>
+        <TextInput 
+          label="ÜOMG - Ortalama bal" 
+          type={"number"}
+          name="averageScore" 
+          value={formData.averageScore} 
+          placeholder="Your Answer" 
+          onChange={handleChange} />
 
         {/* Fin Kod */}
-        <div className="bg-white p-4 mb-6 rounded-md shadow-md">
-          <h3 className="text-base mb-4 text-black">Ortalama balın uyğunluğunun yoxlanılması üçün FİN kodu daxil edin
-          </h3>
-          <input
-            type="text"
-            name="finCode"
-            value={formData.finCode}
-            onChange={handleChange}
-            placeholder="Your Answer"
-            className="mt-1 p-2 w-full border-b-2 border-gray-300 focus:outline-none focus:border-green-500 text-gray-800 text-sm"
-          />
-        </div>
+        <TextInput 
+          label="Ortalama balın uyğunluğunun yoxlanılması üçün FİN kodu daxil edin" 
+          type={"text"}
+          name="finCode" 
+          value={formData.finCode} 
+          placeholder="Your Answer" 
+          onChange={handleChange} />
 
         {/* Submit Button */}
         <div className="flex justify-between mt-8">
           <button
             type="submit"
-            className="bg-green-600 hover:bg-green-700 text-white font-base px-6 py-2 rounded-[5px]"
+            className={`${
+              isFormComplete()
+                ? 'bg-green-600 hover:bg-green-700'
+                : 'bg-gray-400 cursor-not-allowed'
+            } text-white font-base px-6 py-2 rounded-[5px]`}
+            disabled={!isFormComplete()}
           >
             Gönder
           </button>
-
           <button
             type="button"
-            onClick={resetPage} // Sayfayı yenilemek için reset fonksiyonu
+            onClick={resetPage}
             className="bg-red-600 hover:bg-red-700 text-white font-base px-6 py-2 rounded-[5px]"
           >
             Təmizlə
           </button>
         </div>
       </form>
-      <div className='h-[50px] w-full flex items-center justify-center text-black italic'>
+      <div className='h-[50px] w-full flex items-center justify-center text-black italic font-semibold'>
         Beyin Merkezi 2025
       </div>
     </div>
