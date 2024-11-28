@@ -50,11 +50,17 @@ export default function FormPage() {
       alert('Veri kaydederken bir hata oluştu');
       console.error(error);
     }
-    setFormData(initialFormData);
+    
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 3000);
+    
   };
 
   const resetPage = () => {
     setFormData(initialFormData);
+    window.location.reload(); // Sayfayı yeniden yükler
   };
 
   return (
@@ -204,7 +210,7 @@ export default function FormPage() {
                 type="radio"
                 name="university"
                 value="Azərbaycan Dövlət Neft və Sənaye Universiteti"
-                onChange={handleUniversityChange}
+                onChange={handleChange}
                 className="mr-2"
               />
               Azərbaycan Dövlət Neft və Sənaye Universiteti
@@ -214,7 +220,7 @@ export default function FormPage() {
                 type="radio"
                 name="university"
                 value="Sumqayıt Dövlət Universiteti"
-                onChange={handleUniversityChange}
+                onChange={handleChange}
                 className="mr-2"
               />
               Sumqayıt Dövlət Universiteti
@@ -224,7 +230,7 @@ export default function FormPage() {
                 type="radio"
                 name="university"
                 value="Azərbaycan Texniki Universiteti"
-                onChange={handleUniversityChange}
+                onChange={handleChange}
                 className="mr-2"
               />
               Azərbaycan Texniki Universiteti
@@ -234,7 +240,7 @@ export default function FormPage() {
                 type="radio"
                 name="university"
                 value="Bakı Mühəndislik Universiteti"
-                onChange={handleUniversityChange}
+                onChange={handleChange}
                 className="mr-2"
               />
               Bakı Mühəndislik Universiteti
@@ -244,7 +250,7 @@ export default function FormPage() {
                 type="radio"
                 name="university"
                 value="Diğer"
-                onChange={handleUniversityChange}
+                onChange={handleChange}
                 className="mr-2"
               />
               Diğer
