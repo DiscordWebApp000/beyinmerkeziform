@@ -75,10 +75,14 @@ export default function FormPage() {
           <div className='h-3 w-full bg-[#D0B380] rounded-t-[10px]'></div>
           <div className='flex flex-col p-4'>
 
-            <div className='flex flex-row items-center text-black mb-4 '>
-              <h2 className="text-3xl font-semibold mr-2">&quot;Beyin Mərkəzi 2025&quot;</h2>
-              <p className='text-3xl font-base'> layihəsi</p>
-            </div>
+          <div className="flex flex-wrap items-center text-black mb-4">
+            <h2 className="text-2xl lg:text-3xl font-semibold mr-2 whitespace-nowrap">
+              &quot;Beyin Mərkəzi 2025&quot;
+            </h2>
+            <p className=" text-2xl lg:text-3xl font-base">
+              layihəsi
+            </p>
+          </div>
 
             <div className='mb-4' >
               <p className='text-sm font-base'>&quot;Azərişıq&quot; Açıq Səhmdar Cəmiyyəti tərəfindən energetika sektorunda yüksək
