@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { db, addDoc, collection } from '../../lib/firebase';
 import TextInput from './components/TextInput';
 import RadioButtonGroup from './components/RadioButtonGroup';
@@ -24,6 +24,7 @@ export default function FormPage() {
 
   // Form verilerini yönetmek için state kullanıyoruz
   const [formData, setFormData] = useState(initialFormData);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   // Formda değişiklik olduğunda çalışacak fonksiyon
   const handleChange = (e) => {
@@ -37,20 +38,34 @@ export default function FormPage() {
   // Formun gönderilmesi sırasında yapılacak işlemler
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Cihazdaki form gönderim sayısını kontrol et
+    const formSubmissionCount = localStorage.getItem("formSubmittedCount") || 0;
+    if (parseInt(formSubmissionCount) >= 2) {
+      alert("Bu cihazdan 2'den fazla form gönderemezsiniz.");
+      return;
+    }
+
     try {
       await addDoc(collection(db, 'forms'), formData); // Firebase'e veri ekleme
       alert('Məlumat uğurla qeyd edildi!');
+      
+      // Form gönderildikten sonra sayacı artır
+      localStorage.setItem("formSubmittedCount", parseInt(formSubmissionCount) + 1);
+
+      setIsFormSubmitted(true); // Formun gönderildiğini işaretle
     } catch (error) {
       alert('Məlumatı qeyd edərkən xəta baş verdi');
       console.error(error);
     }
 
-  
+    setTimeout(() => {
+      window.location.reload(); // Sayfayı yeniden yükle
+    }, 2000);
   };
 
   // Formu sıfırlamak için kullanılan fonksiyon
   const resetPage = () => {
-  
     window.location.reload(); // Sayfayı yeniden yükle
   };
 
@@ -89,16 +104,16 @@ export default function FormPage() {
 
         <div className="bg-white  mb-6 rounded-[10px] shadow-md flex  justify-center flex-col text-gray-700"> 
           <div className='h-3 w-full bg-[#D0B380] rounded-t-[10px]'></div>
-          <div className='flex flex-col p-4'>
+          <div className='flex flex-col p-4'> 
 
-          <div className="flex flex-wrap items-center text-black mb-4">
-            <h2 className="text-2xl lg:text-3xl font-semibold mr-2 whitespace-nowrap">
-              &quot;Beyin Mərkəzi 2025&quot;
-            </h2>
-            <p className=" text-2xl lg:text-3xl font-base">
-              layihəsi
-            </p>
-          </div>
+            <div className="flex flex-wrap items-center text-black mb-4">
+              <h2 className="text-2xl lg:text-3xl font-semibold mr-2 whitespace-nowrap">
+                &quot;Beyin Mərkəzi 2025&quot;
+              </h2>
+              <p className=" text-2xl lg:text-3xl font-base">
+                layihəsi
+              </p>
+            </div>
 
             <div className='mb-4' >
               <p className='text-sm font-base'>&quot;Azərişıq&quot; Açıq Səhmdar Cəmiyyəti tərəfindən energetika sektorunda yüksək
@@ -123,8 +138,6 @@ export default function FormPage() {
           </div>
         </div>
 
-        
-
         {/* Ad */}
         <TextInput 
           label="Ad" 
@@ -133,7 +146,6 @@ export default function FormPage() {
           value={formData.firstName} 
           placeholder="Your Answer" 
           onChange={handleChange} />
-
 
         {/* Soyad */}
         <TextInput 
@@ -153,7 +165,6 @@ export default function FormPage() {
           placeholder="Your Answer" 
           onChange={handleChange} />
         
-
         {/* E-posta Ünvanı */}
         <TextInput 
           label="Elektron poçt ünvanı" 
@@ -173,46 +184,41 @@ export default function FormPage() {
           onChange={handleChange} />
 
         {/* Askerlik Durumu */}
-        
         <RadioButtonGroup
-        label="Hərbi xidmətdə olmusunuzmu?"
-        name="militaryService"
-        options={militaryServiceOptions}
-        selectedValue={formData.militaryService}
-        onChange={handleChange}
-      />
+          label="Hərbi xidmətdə olmusunuzmu?"
+          name="militaryService"
+          options={militaryServiceOptions}
+          selectedValue={formData.militaryService}
+          onChange={handleChange}
+        />
 
         {/* Üniversite Seçimi */}
         <RadioGroupWithOther
-        label="Təhsil aldığınız universitet"
-        name="university"
-        options={universityOptions}
-        selectedValue={formData.university}
-        onChange={handleChange}
-        placeholder="Lütfen üniversitenizi yazın"
-      />
-    
+          label="Təhsil aldığınız universitet"
+          name="university"
+          options={universityOptions}
+          selectedValue={formData.university}
+          onChange={handleChange}
+          placeholder="Lütfen üniversitenizi yazın"
+        />
 
         {/* İxtisas Seçimi */}
         <RadioButtonGroup
-        label="İxtisas"
-        name="specialty"
-        options={specialtyOptions}
-        selectedValue={formData.specialty}
-        onChange={handleChange}
-      />
+          label="İxtisas"
+          name="specialty"
+          options={specialtyOptions}
+          selectedValue={formData.specialty}
+          onChange={handleChange}
+        />
 
-    {/* Ali Təhsil Dərəcəsi Seçimi */}
+        {/* Ali Təhsil Dərəcəsi Seçimi */}
         <RadioButtonGroup
-        label="Ali təhsil dərəcəsi"
-        name="degree"
-        options={degreeOptions}
-        selectedValue={formData.degree}
-        onChange={handleChange}
-      />
-
-       
-      
+          label="Ali təhsil dərəcəsi"
+          name="degree"
+          options={degreeOptions}
+          selectedValue={formData.degree}
+          onChange={handleChange}
+        />
 
         {/* Ortalama not */}
         <TextInput 
@@ -241,7 +247,7 @@ export default function FormPage() {
                 ? 'bg-green-600 hover:bg-green-700'
                 : 'bg-gray-400 cursor-not-allowed'
             } text-white font-base px-6 py-2 rounded-[5px]`}
-            disabled={!isFormComplete()}
+            disabled={!isFormComplete() || isFormSubmitted}
           >
             Gönder
           </button>

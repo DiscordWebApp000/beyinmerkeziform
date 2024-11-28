@@ -9,6 +9,8 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
 
   // Firebase'den veriyi alma
   useEffect(() => {
@@ -45,6 +47,14 @@ const App = () => {
     } else {
       alert("Yanlış şifre, tekrar deneyin!");
     }
+  };
+
+  // Sayfa değiştirme fonksiyonları
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+  const paginatedData = data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -102,7 +112,7 @@ const App = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((item, rowIndex) => (
+                    {paginatedData.map((item, rowIndex) => (
                       <tr key={rowIndex} className="hover:bg-gray-600">
                         {tableHeaders.map((header, colIndex) => (
                           <td key={colIndex} className="border px-4 py-2">
@@ -113,6 +123,25 @@ const App = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            )}
+
+            {/* Sayfa Değiştirme Navigasyonu */}
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-4">
+                {[...Array(totalPages)].map((_, pageIndex) => (
+                  <button
+                    key={pageIndex}
+                    onClick={() => handlePageChange(pageIndex + 1)}
+                    className={`px-4 py-2 mx-1 rounded ${
+                      currentPage === pageIndex + 1
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                    }`}
+                  >
+                    {pageIndex + 1}
+                  </button>
+                ))}
               </div>
             )}
           </div>
