@@ -68,8 +68,8 @@ export default function FormPage() {
     }
 
     const formSubmissionCount = localStorage.getItem("formSubmittedCount") || 0;
-    if (parseInt(formSubmissionCount) >= 2) {
-      alert("Bu cihazdan 2'den fazla form gönderemezsiniz.");
+    if (parseInt(formSubmissionCount) >= 1) {
+      alert("Siz artıq müraciət etməmisiniz.");
       return;
     }
 
