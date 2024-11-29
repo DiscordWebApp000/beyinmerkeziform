@@ -69,7 +69,7 @@ export default function FormPage() {
 
     const formSubmissionCount = localStorage.getItem("formSubmittedCount") || 0;
     if (parseInt(formSubmissionCount) >= 1) {
-      alert("Siz artıq müraciət etməmisiniz.");
+      alert("Siz artıq müraciət etmisiniz.");
       return;
     }
 
