@@ -34,7 +34,7 @@ const RadioGroupWithOther = ({
             onChange={() => onChange({ target: { name, value: "Diğer" } })}
             className="mr-2"
           />
-          Diğer
+          Diğər
         </label>
         {selectedValue && !options.includes(selectedValue) && (
           <input
