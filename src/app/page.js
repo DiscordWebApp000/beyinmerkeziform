@@ -187,7 +187,7 @@ export default function FormPage() {
           selectedValue={formData.degree}
           onChange={handleChange}
         />
-        <TextInput type={'number'} label="ÜOMG" name="averageScore" value={formData.averageScore} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <TextInput type={'number'} label="ÜOMG - Ortalama bal" name="averageScore" value={formData.averageScore} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
         <TextInput type={'text'} label="FİN kodu daxil edin" name="finCode" value={formData.finCode} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
 
         <div className="flex justify-between mt-8">
@@ -198,7 +198,7 @@ export default function FormPage() {
             } text-white px-6 py-2 rounded`}
             disabled={!isFormComplete() || isFormSubmitted}
           >
-            Gönder
+            Göndər
           </button>
           <button
             type="button"
