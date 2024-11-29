@@ -154,11 +154,11 @@ export default function FormPage() {
           </div>
         </div>
 
-        <TextInput label="Ad" name="firstName" value={formData.firstName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
-        <TextInput label="Soyad" name="lastName" value={formData.lastName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
-        <TextInput label="Ata Adı" name="fatherName" value={formData.fatherName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
-        <TextInput label="Elektron poçt ünvanı" name="email" value={formData.email} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
-        <TextInput label="Əlaqə Nömrəsi" name="phone" value={formData.phone} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <TextInput type={'text'} label="Ad" name="firstName" value={formData.firstName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <TextInput type={'text'} label="Soyad" name="lastName" value={formData.lastName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <TextInput type={'text'} label="Ata Adı" name="fatherName" value={formData.fatherName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <TextInput type={'email'} label="Elektron poçt ünvanı" name="email" value={formData.email} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <TextInput type={'number'} label="Əlaqə Nömrəsi" name="phone" value={formData.phone} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
         <RadioButtonGroup
           label="Hərbi xidmətdə olmusunuzmu?"
           name="militaryService"
@@ -187,8 +187,8 @@ export default function FormPage() {
           selectedValue={formData.degree}
           onChange={handleChange}
         />
-        <TextInput label="ÜOMG" name="averageScore" value={formData.averageScore} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
-        <TextInput label="FİN kodu daxil edin" name="finCode" value={formData.finCode} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <TextInput type={'number'} label="ÜOMG" name="averageScore" value={formData.averageScore} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <TextInput type={'text'} label="FİN kodu daxil edin" name="finCode" value={formData.finCode} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
 
         <div className="flex justify-between mt-8">
           <button
