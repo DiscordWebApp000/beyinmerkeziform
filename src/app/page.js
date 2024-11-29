@@ -144,7 +144,7 @@ export default function FormPage() {
           type={"text"}
           name="firstName" 
           value={formData.firstName} 
-          placeholder="Your Answer" 
+          placeholder="Sizin Cavabınız ..." 
           onChange={handleChange} />
 
         {/* Soyad */}
@@ -153,7 +153,7 @@ export default function FormPage() {
           type={"text"}
           name="lastName" 
           value={formData.lastName} 
-          placeholder="Your Answer" 
+          placeholder="Sizin Cavabınız ..." 
           onChange={handleChange} />
 
         {/* Ata Adı */}
@@ -162,7 +162,7 @@ export default function FormPage() {
           type={"text"}
           name="fatherName" 
           value={formData.fatherName} 
-          placeholder="Your Answer" 
+          placeholder="Sizin Cavabınız ..." 
           onChange={handleChange} />
         
         {/* E-posta Ünvanı */}
@@ -171,7 +171,7 @@ export default function FormPage() {
           type={"email"}
           name="email" 
           value={formData.email} 
-          placeholder="Your Answer" 
+          placeholder="Sizin Cavabınız ..." 
           onChange={handleChange} />
 
         {/* Telefon Numarası */}
@@ -180,7 +180,7 @@ export default function FormPage() {
           type={"number"}
           name="phone" 
           value={formData.phone} 
-          placeholder="Your Answer" 
+          placeholder="Sizin Cavabınız ..." 
           onChange={handleChange} />
 
         {/* Askerlik Durumu */}
@@ -199,7 +199,7 @@ export default function FormPage() {
           options={universityOptions}
           selectedValue={formData.university}
           onChange={handleChange}
-          placeholder="Lütfen üniversitenizi yazın"
+          placeholder="Universitetin adını daxil edin ..."
         />
 
         {/* İxtisas Seçimi */}
@@ -226,7 +226,7 @@ export default function FormPage() {
           type={"number"}
           name="averageScore" 
           value={formData.averageScore} 
-          placeholder="Your Answer" 
+          placeholder="Sizin Cavabınız ..." 
           onChange={handleChange} />
 
         {/* Fin Kod */}
@@ -235,7 +235,7 @@ export default function FormPage() {
           type={"text"}
           name="finCode" 
           value={formData.finCode} 
-          placeholder="Your Answer" 
+          placeholder="Sizin Cavabınız ..." 
           onChange={handleChange} />
 
         {/* Submit Button */}
@@ -261,7 +261,7 @@ export default function FormPage() {
         </div>
       </form>
       <div className='h-[50px] w-full flex items-center justify-center text-black italic font-semibold'>
-        Beyin Merkezi 2025
+        Beyin Mərkəzi 2025
       </div>
     </div>
   );
