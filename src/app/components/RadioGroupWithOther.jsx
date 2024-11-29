@@ -6,7 +6,7 @@ const RadioGroupWithOther = ({
   options, 
   selectedValue, 
   onChange, 
-  placeholder = "Lütfen yazın..." 
+  placeholder = "Universitetin adını daxil edin", 
 }) => {
   return (
     <div className="bg-white p-4 mb-6 rounded-md shadow-md">
