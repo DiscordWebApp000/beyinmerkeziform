@@ -69,7 +69,7 @@ const App = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Şifrenizi girin"
-              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 mb-4"
+              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 mb-4 text-gray-700"
             />
             <button
               onClick={handlePasswordSubmit}
@@ -128,7 +128,7 @@ const App = () => {
 
             {/* Sayfa Değiştirme Navigasyonu */}
             {totalPages > 1 && (
-              <div className="flex justify-center mt-4">
+              <div className="flex justify-center mt-4 overflow-x-auto">
                 {[...Array(totalPages)].map((_, pageIndex) => (
                   <button
                     key={pageIndex}
