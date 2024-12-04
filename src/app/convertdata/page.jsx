@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore';
 import { exportToExcel } from '../components/excelExportFunction';
-import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
 
 const App = () => {
@@ -31,6 +31,18 @@ const App = () => {
     }
   }, [isAuthenticated]);
 
+  // Silme fonksiyonu
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "forms", id));
+      // Silme işleminden sonra veriyi güncelle
+      setData(data.filter(item => item.id !== id));
+    } catch (error) {
+      console.error("Veri silme sırasında hata:", error);
+    }
+  };
+
+  // Excel'e aktarma fonksiyonu
   const handleExportClick = async () => {
     setLoading(true);
     await exportToExcel(data);
@@ -109,16 +121,26 @@ const App = () => {
                           {header.toUpperCase()}
                         </th>
                       ))}
+                      <th className="border px-4 py-2 text-left">Sil</th>
                     </tr>
                   </thead>
                   <tbody>
                     {paginatedData.map((item, rowIndex) => (
                       <tr key={rowIndex} className="hover:bg-gray-600">
+                        <td className="border px-4 py-2">
+                          <button
+                            onClick={() => handleDelete(item.id)}
+                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                          >
+                            Sil
+                          </button>
+                        </td>
                         {tableHeaders.map((header, colIndex) => (
                           <td key={colIndex} className="border px-4 py-2">
                             {item[header] || "—"}
                           </td>
                         ))}
+                        
                       </tr>
                     ))}
                   </tbody>
