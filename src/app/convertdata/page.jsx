@@ -50,7 +50,7 @@ const App = () => {
   };
 
   // Tablonun başlıklarını belirleme
-  const tableHeaders = ["id", "firstName", "lastName", "fatherName", "degree", ...Object.keys(data[0] || {}).filter(key => !["id", "firstName", "lastName", "fatherName", "degree"].includes(key))];
+  const tableHeaders = [ "id", "firstName", "lastName", "fatherName", "degree", ...Object.keys(data[0] || {}).filter(key => !["id", "firstName", "lastName", "fatherName", "degree"].includes(key))];
 
   // Şifre doğrulama
   const handlePasswordSubmit = () => {
@@ -116,12 +116,13 @@ const App = () => {
                 <table className="table-auto w-full border border-gray-700">
                   <thead className="bg-gray-700">
                     <tr>
+                  <th className="border px-4 py-2 text-left">Sil</th>
                       {tableHeaders.map((header, index) => (
                         <th key={index} className="border px-4 py-2 text-left">
                           {header.toUpperCase()}
                         </th>
                       ))}
-                      <th className="border px-4 py-2 text-left">Sil</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
