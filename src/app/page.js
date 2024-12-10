@@ -154,7 +154,9 @@ export default function FormPage() {
           </div>
         </div>
 
-        <TextInput type={'text'} label="Ad" name="firstName" value={formData.firstName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
+        <div className='bg-white p-2 mb-6 rounded-md shadow-md flex items-center justify-center text-gray-700'>Müraciətin son tarixi bitmişdir.</div>
+
+        {/* <TextInput type={'text'} label="Ad" name="firstName" value={formData.firstName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
         <TextInput type={'text'} label="Soyad" name="lastName" value={formData.lastName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
         <TextInput type={'text'} label="Ata Adı" name="fatherName" value={formData.fatherName} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
         <TextInput type={'email'} label="Elektron poçt ünvanı" name="email" value={formData.email} onChange={handleChange} placeholder={'Sizin Cavabınız ...'}/>
@@ -207,7 +209,7 @@ export default function FormPage() {
           >
             Təmizlə
           </button>
-        </div>
+        </div> */}
       </form>
       <div className="h-[50px] flex items-center justify-center text-black italic font-semibold">
         Beyin Mərkəzi 2025
